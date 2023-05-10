@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.3
+import QtQml 2.3
 
 Window {
     //tamanho do Vt
@@ -10,6 +12,7 @@ Window {
     id: main
     visible: true
     title: qsTr("Hello World")
+    property string colorSelected: "lightgray"
 
     //definição do background
     Image {
@@ -134,17 +137,45 @@ Window {
             id: mListViewId
 
             width: 200; height: parent.height- topMenu.height
+            MouseArea
+                    {
+                        anchors.fill: parent
+
+                        onClicked: setCurrentItem(mouseX,mouseY)
+                    }
+
+            Component {
+                   id: contactsDelegate
+                   Rectangle {
+                       id: wrapper
+                       width: 200
+                       height: 20
+                       color: ListView.isCurrentItem ? "lightgray" : "transparent"
+                       Text {
+                           id: contactInfo
+                           text: name
+                           color: wrapper.ListView.isCurrentItem ? "black" : "white"
+                       }
+                   }
+               }
 
             model: PageModel {}
-            delegate: Text{ text: name;color: "white" }
-            highlight: highlight
-            highlightFollowsCurrentItem: false
+
+            delegate: contactsDelegate//Text{ text: name; color: "white" }
+//            highlight: highlight
+//            highlightFollowsCurrentItem: false
             focus: true
 
 
         }
     }
+    function setCurrentItem(x, y)
+    {
+        var index = mListViewId.indexAt(x, y)
+        mListViewId.currentIndex = index
+    }
 }
+
 
 
 
