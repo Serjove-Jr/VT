@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Images/background.jpg</file>
+        <file>PageModel.qml</file>
+        <file>SwitchButton.qml</file>
+    </qresource>
+</RCC>
