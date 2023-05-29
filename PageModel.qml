@@ -5,7 +5,7 @@ ListModel {
 
     ListElement {
         name: "Pisca LE"
-         number: "555 3264"
+        number: "555 3264"
      }
      ListElement {
          name: "Pisca LD"

@@ -4,5 +4,11 @@
         <file>Images/background.jpg</file>
         <file>PageModel.qml</file>
         <file>SwitchButton.qml</file>
+        <file>PiscaLE.qml</file>
+        <file>PiscaLD.qml</file>
+        <file>SensorPinoRei.qml</file>
+        <file>PortaAberta.qml</file>
+        <file>SensorCarreta.qml</file>
+        <file>SensorTravaQR.qml</file>
     </qresource>
 </RCC>

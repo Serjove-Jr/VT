@@ -63,7 +63,6 @@ Window {
 
             }
         }
-
         Item{//Botão do incremento
             height: topMenu.height
             width:150
@@ -73,7 +72,6 @@ Window {
                 text: qsTr("Incremental")
             }
         }
-
         Item{//Botão do Menu
             height: topMenu.height
             width: 75
@@ -112,12 +110,33 @@ Window {
         }
     }
     //Fim da configuração dos botões e textos da barra superior
+    Item{//Configuração do StackView
+        id: itemStackView
+        anchors.top: topMenu.bottom
+        anchors.left: itemListView.right
+        width: parent.width - itemListView.width
+        height: parent.height - topMenu.heigt
+        StackLayout{
+            id:stackLayout
+            currentIndex: 0
+
+            PiscaLD{}
+            PiscaLE{}
+            SensorPinoRei{}
+            PortaAberta{}
+            SensorCarreta{}
+            SensorTravaQR{}
+
+        }
+
+    }
     //Component listView
     Item{
+        id:itemListView
         anchors.top: topMenu.bottom
         width: 200; height: parent.height- topMenu.height
 
-//
+        //Highlight do list view
         Component {
             id: highlight
             Rectangle {
@@ -131,13 +150,14 @@ Window {
                     }
                 }
             }
-        }
+        }//Fim do highlight
         ListView{
             anchors.fill: parent
             id: mListViewId
 
             width: 200; height: parent.height- topMenu.height
-            MouseArea
+
+            MouseArea//mouse area
                     {
                         anchors.fill: parent
 
@@ -162,19 +182,17 @@ Window {
             model: PageModel {}
 
             delegate: contactsDelegate//Text{ text: name; color: "white" }
-//            highlight: highlight
-//            highlightFollowsCurrentItem: false
             focus: true
 
 
         }
     }
-    function setCurrentItem(x, y)
-    {
+    function setCurrentItem(x, y) {
         var index = mListViewId.indexAt(x, y)
         mListViewId.currentIndex = index
+        stackLayout.currentIndex = index
     }
-}
+}//Fim da window
 
 
 
