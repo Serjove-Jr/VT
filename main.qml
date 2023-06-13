@@ -17,8 +17,8 @@ Window {
     //definição do background
     Image {
         id: backgroung
-        width: parent.width
-        height: parent.height
+        width: sourceSize.width
+        height: sourceSize.height
         source: "qrc:/Images/background.jpg"
     }
     //fim da definição do background
@@ -30,108 +30,88 @@ Window {
         width: parent.width
         //anchors.topMargin: parent
         height: 50
-        }
-     //fim do layout da barra do menu superior
-     //inicio da configuração dos botões etextos da barra superior
-    Row{
-        id: topButtons
-        spacing: 5
-        //anchors.topMargin: parent
-        height: 50
-        Item{//Texto/Logo da aplicação
+        RowLayout{
+            id: topButtons
+            spacing: 5
+            anchors.fill: parent
 
-            id: title
-            height: topMenu.height
-            width: 200
-            Text {
-                text: qsTr("Simulador")
-                anchors.centerIn: title
-                color: "White"
-                font.bold: true
-
-                font.pixelSize: 24
-            }
-
-        }
-        Item{//Botão do auto incremento
-            height: topMenu.height
-            width: 150
-            SwitchButton{
-                id: autoIncrementButton
-                anchors.centerIn: parent
-                text: qsTr("Automático")
-
-            }
-        }
-        Item{//Botão do incremento
-            height: topMenu.height
-            width:150
-            SwitchButton{
-                id: incrementButton
-                anchors.centerIn: parent
-                text: qsTr("Incremental")
-            }
-        }
-        Item{//Botão do Menu
-            height: topMenu.height
-            width: 75
-            id: menuButtonRec
-            RoundButton{
-                id: menuButton
-                anchors.centerIn: menuButtonRec
-                width: 50
-                height: 25
-
+            Item{//Texto/Logo da aplicação
+                id: title
+                height: topMenu.height
+                width: 200
                 Text {
-                    anchors.centerIn: menuButton
-                    text: qsTr("Menu")
-                    font.pixelSize: 10
-                    color:"black"
+                    text: qsTr("Simulador")
+                    anchors.centerIn: title
+                    color: "White"
+                    font.bold: true
+
+                    font.pixelSize: 24
+                }
+
+            }
+            Item{//Botão do auto incremento
+                id: autoButtonRec
+                height: topMenu.height
+                width: 150
+                SwitchButton{
+                    id: autoIncrementButton
+                    anchors.centerIn: parent
+                    text: qsTr("Automático")
+
                 }
             }
-        }
-        Item{//Botão de reset
-            height: topMenu.height
-            width: 75
-            id: resetButtonRec
-            RoundButton{
-                id: resetButton
-                anchors.centerIn: resetButtonRec
-                width: 50
-                height: 25
-
-                Text {
-                    anchors.centerIn: resetButton
-                    text: qsTr("Reset")
-                    font.pixelSize: 10
-                    color:"black"
+            Item{//Botão do incremento
+                height: topMenu.height
+                width:150
+                SwitchButton{
+                    id: incrementButton
+                    anchors.centerIn: parent
+                    text: qsTr("Incremental")
                 }
             }
-        }
-    }
-    //Fim da configuração dos botões e textos da barra superior
-    Item{//Configuração do StackView
-        id: itemStackView
-        anchors.top: topMenu.bottom
-        anchors.left: itemListView.right
-        width: parent.width - itemListView.width
-        height: parent.height - topMenu.heigt
-        StackLayout{
-            id:stackLayout
-            currentIndex: 0
+            Item{//Botão do Menu
+                id: menuButtonRec
+                height: topMenu.height
+                width: 75
+                RoundButton{
+                    id: menuButton
+                    anchors.centerIn: menuButtonRec
+                    width: 50
+                    height: 25
 
-            PiscaLD{}
-            PiscaLE{}
-            SensorPinoRei{}
-            PortaAberta{}
-            SensorCarreta{}
-            SensorTravaQR{}
+                    Text {
+                        anchors.centerIn: menuButton
+                        text: qsTr("Menu")
+                        font.pixelSize: 10
+                        color:"black"
+                    }
+                }
+            }
+            Item{//Botão de reset
+                height: topMenu.height
+                width: 75
+                id: resetButtonRec
+                RoundButton{
+                    id: resetButton
+                    anchors.centerIn: resetButtonRec
+                    width: 50
+                    height: 25
 
+                    Text {
+                        anchors.centerIn: resetButton
+                        text: qsTr("Reset")
+                        font.pixelSize: 10
+                        color:"black"
+                    }
+                }
+            }
         }
 
     }
-    //Component listView
-    Item{
+    //Fim da configuração dos botões e textos da barra superior
+    //fim do layout da barra do menu superior
+
+    Item{//Component listView
         id:itemListView
         anchors.top: topMenu.bottom
         width: 200; height: parent.height- topMenu.height
@@ -152,32 +132,33 @@ Window {
             }
         }//Fim do highlight
         ListView{
-            anchors.fill: parent
             id: mListViewId
+            anchors.fill: parent
+
 
             width: 200; height: parent.height- topMenu.height
 
             MouseArea//mouse area
-                    {
-                        anchors.fill: parent
+            {
+                anchors.fill: parent
 
-                        onClicked: setCurrentItem(mouseX,mouseY)
-                    }
+                onClicked: setCurrentItem(mouseX,mouseY)
+            }
 
             Component {
-                   id: contactsDelegate
-                   Rectangle {
-                       id: wrapper
-                       width: 200
-                       height: 20
-                       color: ListView.isCurrentItem ? "lightgray" : "transparent"
-                       Text {
-                           id: contactInfo
-                           text: name
-                           color: wrapper.ListView.isCurrentItem ? "black" : "white"
-                       }
-                   }
-               }
+                id: contactsDelegate
+                Rectangle {
+                    id: wrapper
+                    width: 200
+                    height: 20
+                    color: ListView.isCurrentItem ? "lightgray" : "transparent"
+                    Text {
+                        id: contactInfo
+                        text: name
+                        color: wrapper.ListView.isCurrentItem ? "black" : "white"
+                    }
+                }
+            }
 
             model: PageModel {}
 
@@ -187,6 +168,28 @@ Window {
 
         }
     }
+
+    Item{//Configuração do StackView
+        id: itemStackView
+        anchors.top: topMenu.bottom
+        anchors.left: itemListView.right
+        width: parent.width - itemListView.width
+        height: parent.height - topMenu.heigt
+        StackLayout{
+            id:stackLayout
+            currentIndex: 0
+
+            PiscaLD{}
+            PiscaLE{}
+            SensorPinoRei{}
+            PortaAberta{}
+            SensorCarreta{}
+            SensorTravaQR{}
+
+        }
+
+    }
+
     function setCurrentItem(x, y) {
         var index = mListViewId.indexAt(x, y)
         mListViewId.currentIndex = index
